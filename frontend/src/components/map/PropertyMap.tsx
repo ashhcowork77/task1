@@ -115,7 +115,7 @@ export function PropertyMap({
         if (source && typeof source.getClusterExpansionZoom === 'function') {
           // MapLibre v5 uses Promise-based API
           source.getClusterExpansionZoom(clusterId).then((zoom: number) => {
-            const geometry = feature.geometry as GeoJSON.Point;
+            const geometry = feature.geometry as { type: 'Point'; coordinates: [number, number] };
             setViewState({
               longitude: geometry.coordinates[0],
               latitude: geometry.coordinates[1],
