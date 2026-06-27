@@ -1,0 +1,10 @@
+packages:
+  - 'packages/*'
+  - 'payload'
+  - 'frontend'
+allowBuilds:
+  better-sqlite3: false
+  es5-ext: true
+  esbuild: false
+  sharp: true
+  unrs-resolver: false
