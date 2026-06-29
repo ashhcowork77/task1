@@ -327,3 +327,36 @@ export const getPropertiesByBHKType = cache(async (bhkType: string): Promise<Pro
     return fallback;
   }
 });
+
+export const getPropertiesByLocality = cache(async (locality: string): Promise<Property[]> => {
+  const fallback = demoProperties.filter(
+    (property) => property.locality?.toLowerCase() === locality.toLowerCase()
+  );
+
+  try {
+    const payload = await getPayloadInstance();
+
+    if (!payload) {
+      return fallback;
+    }
+
+    const result = await payload.find({
+      collection: 'properties',
+      where: {
+        and: [
+          { locality: { like: locality } },
+          { status: { equals: 'published' } },
+        ],
+      },
+      limit: 50,
+      sort: '-createdAt',
+    });
+
+    return result.docs.length > 0
+      ? (result.docs as unknown as Property[])
+      : fallback;
+  } catch (error) {
+    console.error('Error fetching properties by locality:', error);
+    return fallback;
+  }
+});
