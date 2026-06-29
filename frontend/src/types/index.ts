@@ -39,6 +39,10 @@ export interface Property {
   furnishingStatus?: 'furnished' | 'semi_furnished' | 'unfurnished';
   bedrooms?: number;
   bathrooms?: number;
+  area?: {
+    value: number;
+    unit: 'sqft' | 'sqm' | 'guntha' | 'acre' | 'marla';
+  };
   maxGuests?: number;
   floor?: { current: number; total: number };
   facing?: string;

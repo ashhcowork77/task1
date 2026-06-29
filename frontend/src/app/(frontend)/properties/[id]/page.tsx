@@ -22,6 +22,8 @@ import InquiryForm from '@/components/InquiryForm';
 import { getStableImageUrl } from '@/lib/media';
 import type { Property } from '@/types';
 import { Reveal } from '@/components/Reveal';
+import { PropertyQRCodeButton } from '@/components/PropertyQRCodeButton';
+import { PropertyShareButtonsWrapper } from '@/components/PropertyShareButtonsWrapper';
 
 interface PropertyPageProps {
   params: Promise<{
@@ -277,6 +279,17 @@ export default async function PropertyPage({
 
         <aside id="request" className="md:col-span-5 lg:col-span-4 lg:col-start-9">
           <div className="sticky top-6 space-y-4">
+            <PropertyQRCodeButton
+              propertyUrl={`${process.env.NEXT_PUBLIC_BASE_URL || 'https://notjustastay.com'}/properties/${id}`}
+              propertyTitle={property.title}
+              className="w-full"
+            />
+            <PropertyShareButtonsWrapper
+              url={`${process.env.NEXT_PUBLIC_BASE_URL || 'https://notjustastay.com'}/properties/${id}`}
+              title={property.title}
+              description={property.shortDescription}
+              variant="compact"
+            />
             <InquiryForm
               propertyId={String(property.id)}
               propertyTitle={property.title}

@@ -1,8 +1,11 @@
+'use client';
+
 import Link from 'next/link';
-import { Bath, Bed, MapPin, Maximize2, Users } from 'lucide-react';
+import { Bath, Bed, MapPin, Maximize2, Users, Heart } from 'lucide-react';
 import type { Property } from '@/types';
 import { cn } from '@/lib/utils';
 import { getStableImageUrl } from '@/lib/media';
+import { useSavedProperties } from '@/lib/hooks/useSavedProperties';
 
 interface PropertyCardProps {
   property: Property;
@@ -45,6 +48,9 @@ export function PropertyCard({ property, priority = false, className }: Property
     .filter(Boolean)
     .join(', ');
 
+  const { isSaved, toggleSaved } = useSavedProperties();
+  const saved = isSaved(property.id);
+
   return (
     <article className={cn('group bg-white', className)}>
       <Link href={hrefFor(property)} className="block">
@@ -56,6 +62,22 @@ export function PropertyCard({ property, priority = false, className }: Property
             className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
             loading={priority ? 'eager' : 'lazy'}
           />
+          {/* Save Button */}
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              toggleSaved(property.id);
+            }}
+            className={cn(
+              'absolute top-3 right-3 p-2 rounded-full transition-all shadow-md',
+              saved
+                ? 'bg-red-500 text-white hover:bg-red-600'
+                : 'bg-white/90 text-gray-400 hover:text-red-500 hover:bg-white'
+            )}
+          >
+            <Heart className={cn('w-5 h-5', saved && 'fill-current')} />
+          </button>
           <div className="absolute inset-x-0 bottom-0 flex items-end justify-between bg-gradient-to-t from-black/55 to-transparent p-5 text-white">
             <div>
               <p className="text-[11px] font-semibold uppercase text-white/70">From</p>

@@ -19,6 +19,7 @@ import type { Property, PropertyMedia } from '@/types';
 import InquiryForm from './InquiryForm';
 import { POIOverlay } from './poi/POIOverlay';
 import { PropertyGallery } from './PropertyGallery';
+import { PropertyQRCode } from './PropertyQRCode';
 
 /**
  * Property Detail Component
